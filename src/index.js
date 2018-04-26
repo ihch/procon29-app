@@ -1,7 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
+
+const propTypes = {
+    onClick: PropTypes.func
+}
 
 function makeRandomNumber(mod=17, NegativeNumberProbability=20) {
     // mod is decided 16 by kosen procon29 rule book.
@@ -31,7 +36,6 @@ function Square(props) {
 
 function Squares(props) {
     let elements = [];
-    console.log("hogehoge");
 
     for (let i = 0; i < props.sizeX; i++) {
         for (let j = 0; j < props.sizeY; j++) {
@@ -46,10 +50,31 @@ function handleClick() {
     return null;
 }
 
+class RefreshBoardButton extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    clickHandler() {
+        return this.props.onClick();
+    }
+
+    render() {
+        return (
+            <button onClick={() => {this.clickHandler()}}>
+                refresh
+            </button>
+        );
+    };
+}
+
 class Board extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            sizeX: this.props.sizeX,
+            sizeY: this.props.sizeY,
             squares: ((sizeX, sizeY) => {
                 return new Array(sizeX).fill(0).map(() => {
                     return new Array(sizeY).fill(0);
@@ -60,9 +85,29 @@ class Board extends React.Component {
         console.log(this.state.squares);
     }
 
+
+    refreshBoard() {
+        this.setState({pointOfGameBoard: initBoard(this.state.sizeX, this.state.sizeY)})
+    }
+
+
     render() {
         return (
-            <Squares sizeX={this.props.sizeX} sizeY={this.props.sizeY} pointOfGameBoard={this.state.pointOfGameBoard} />
+            <div>
+                <Squares
+                    sizeX={this.state.sizeX}
+                    sizeY={this.state.sizeY}
+                    pointOfGameBoard={this.state.pointOfGameBoard}
+                />
+                <RefreshBoardButton
+                    sizeX={this.state.sizeX}
+                    sizeY={this.state.sizeY}
+                    onClick={this.refreshBoard.bind(this)}
+                    // onClick={() => {this.setState({
+                    //     pointOfGameBoard: initBoard(this.state.sizeX, this.state.sizeY)
+                    // })}}
+                />
+            </div>
         );
     }
 }
@@ -70,7 +115,7 @@ class Board extends React.Component {
 class App extends React.Component {
     render() {
         return (
-            <Board sizeX={4} sizeY={7} />
+            <Board sizeX={12} sizeY={12} />
         );
     }
 }
