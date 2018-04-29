@@ -26,7 +26,7 @@ function initBoard(sizeX, sizeY) {
    return arr;
 }
 
-class Board extends React.Component {
+class Game extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -74,7 +74,7 @@ class App extends React.Component {
     render() {
         return (
             <MuiThemeProvider>
-                <Board sizeX={12} sizeY={12} />
+                <Game sizeX={12} sizeY={12} />
             </MuiThemeProvider>
         );
     }
