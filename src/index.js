@@ -1,17 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
-const propTypes = {
-    onClick: PropTypes.func
-}
 
-function makeRandomNumber(mod=17, NegativeNumberProbability=20) {
-    // mod is decided 16 by kosen procon29 rule book.
-    // NegativeNumberProbability is a any number of integer.
-    return Math.floor(Math.random() * 100) % mod * (Math.random() * 100 >= 20 ? 1 : -1);
+function makeRandomNumber(mod=17, negativeNumberProbability=10) {
+    // modNumSize: 大きい数字が出る確率の調整
+    let modNumSize = Math.floor(mod / (Math.random() * 100 >= 50 ? 1 : 2));
+    let toNegative = (Math.random() * 100 >= negativeNumberProbability ? 1 : -1);
+    return Math.floor(Math.random() * 100) % modNumSize * toNegative;
 }
 
 function initBoard(sizeX, sizeY) {
@@ -53,20 +50,43 @@ function handleClick() {
 class RefreshBoardButton extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            sizeX: this.props.sizeX,
+            sizeY: this.props.sizeY
+        }
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    clickHandler() {
-        return this.props.onClick();
+    handleSubmit() {
+        return this.props.onClick(this.state.sizeX, this.state.sizeY);
+    }
+
+    handleChange(event) {
+        switch (event.target.name) {
+            case "sizeX":
+                this.setState({sizeX: Number(event.target.value + "")});
+                break;
+            case "sizeY":
+                this.setState({sizeY: Number(event.target.value + "")});
+                break;
+            default:
+                break;
+        }
     }
 
     render() {
         return (
-            <button onClick={() => {this.clickHandler()}}>
-                refresh
-            </button>
+            <div>
+                <label>
+                    sizeX: <input type="text" name="sizeX" value={this.state.sizeX} onChange={this.handleChange} />
+                    sizeY: <input type="text" name="sizeY" value={this.state.sizeY} onChange={this.handleChange} />
+                </label>
+                <input type="submit" value="Refresh" onClick={this.handleSubmit}/>
+            </div>
         );
-    };
+    }
 }
 
 class Board extends React.Component {
@@ -86,8 +106,12 @@ class Board extends React.Component {
     }
 
 
-    refreshBoard() {
-        this.setState({pointOfGameBoard: initBoard(this.state.sizeX, this.state.sizeY)})
+    refreshBoard(newSizeX, newSizeY) {
+        this.setState({
+            sizeX: newSizeX,
+            sizeY: newSizeY,
+            pointOfGameBoard: initBoard(newSizeX, newSizeY)
+        })
     }
 
 
@@ -103,9 +127,6 @@ class Board extends React.Component {
                     sizeX={this.state.sizeX}
                     sizeY={this.state.sizeY}
                     onClick={this.refreshBoard.bind(this)}
-                    // onClick={() => {this.setState({
-                    //     pointOfGameBoard: initBoard(this.state.sizeX, this.state.sizeY)
-                    // })}}
                 />
             </div>
         );
