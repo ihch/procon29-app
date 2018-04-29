@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Squares from './Squares';
+import RefreshBoardButton from './RefreshBoardButton';
 import './index.css';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import registerServiceWorker from './registerServiceWorker';
 
 
@@ -21,72 +24,6 @@ function initBoard(sizeX, sizeY) {
        }
    }
    return arr;
-}
-
-function Square(props) {
-    return (
-        <button className="square" onClick={() => props.onClick()}>
-            {props.point}
-        </button>
-    );
-}
-
-function Squares(props) {
-    let elements = [];
-
-    for (let i = 0; i < props.sizeX; i++) {
-        for (let j = 0; j < props.sizeY; j++) {
-            elements.push(<Square point={props.pointOfGameBoard[i][j]} onClick={() => handleClick()} />);
-        }
-        elements.push(<br />);
-    }
-    return elements;
-}
-
-function handleClick() {
-    return null;
-}
-
-class RefreshBoardButton extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            sizeX: this.props.sizeX,
-            sizeY: this.props.sizeY
-        }
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleSubmit() {
-        return this.props.onClick(this.state.sizeX, this.state.sizeY);
-    }
-
-    handleChange(event) {
-        switch (event.target.name) {
-            case "sizeX":
-                this.setState({sizeX: Number(event.target.value + "")});
-                break;
-            case "sizeY":
-                this.setState({sizeY: Number(event.target.value + "")});
-                break;
-            default:
-                break;
-        }
-    }
-
-    render() {
-        return (
-            <div>
-                <label>
-                    sizeX: <input type="text" name="sizeX" value={this.state.sizeX} onChange={this.handleChange} />
-                    sizeY: <input type="text" name="sizeY" value={this.state.sizeY} onChange={this.handleChange} />
-                </label>
-                <input type="submit" value="Refresh" onClick={this.handleSubmit}/>
-            </div>
-        );
-    }
 }
 
 class Board extends React.Component {
@@ -136,7 +73,9 @@ class Board extends React.Component {
 class App extends React.Component {
     render() {
         return (
-            <Board sizeX={12} sizeY={12} />
+            <MuiThemeProvider>
+                <Board sizeX={12} sizeY={12} />
+            </MuiThemeProvider>
         );
     }
 }
