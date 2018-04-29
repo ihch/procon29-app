@@ -1,4 +1,5 @@
 import React from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
 
 export default class RefreshBoardButton extends React.Component {
     constructor(props) {
@@ -36,7 +37,7 @@ export default class RefreshBoardButton extends React.Component {
                     sizeX: <input type="text" name="sizeX" value={this.state.sizeX} onChange={this.handleChange} />
                     sizeY: <input type="text" name="sizeY" value={this.state.sizeY} onChange={this.handleChange} />
                 </label>
-                <input type="submit" value="Refresh" onClick={this.handleSubmit}/>
+                <RaisedButton type="submit" label="Refresh" onClick={this.handleSubmit}/>
             </div>
         );
     }
