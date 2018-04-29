@@ -14,7 +14,7 @@ function makeRandomNumber(mod=17, negativeNumberProbability=10) {
     return Math.floor(Math.random() * 100) % modNumSize * toNegative;
 }
 
-function initBoard(sizeX, sizeY) {
+function initBoardPoint(sizeX, sizeY) {
    let arr = new Array(sizeX).fill(0).map(() => {
        return new Array(sizeY).fill(0);
    });
@@ -24,6 +24,12 @@ function initBoard(sizeX, sizeY) {
        }
    }
    return arr;
+}
+
+function initBoardState(sizeX, sizeY) {
+    return new Array(sizeX).fill(0).map(() => {
+        return Array(sizeY).fill({player: null});
+    });
 }
 
 class Game extends React.Component {
@@ -37,7 +43,8 @@ class Game extends React.Component {
                     return new Array(sizeY).fill(0);
                 });
             })(this.props.sizeX, this.props.sizeY),
-            pointOfGameBoard: initBoard(this.props.sizeX, this.props.sizeY),
+            pointOfGameBoard: initBoardPoint(this.props.sizeX, this.props.sizeY),
+            stateOfGameBoard: initBoardState(this.props.sizeX, this.props.sizeY),
         }
         console.log(this.state.squares);
     }
@@ -47,8 +54,18 @@ class Game extends React.Component {
         this.setState({
             sizeX: newSizeX,
             sizeY: newSizeY,
-            pointOfGameBoard: initBoard(newSizeX, newSizeY)
-        })
+            pointOfGameBoard: initBoardPoint(newSizeX, newSizeY),
+            stateOfGameBoard: initBoardState(newSizeX, newSizeY)
+        });
+    }
+
+
+    handleClickSquare(event, player) {
+        var index = event.target.value.split(",").map((n) => Number(n));
+        let stateCopy = Object.assign({}, this.state);
+        // TODO: ターン制, player1, player2の操作に対応する
+        stateCopy.stateOfGameBoard[index[0]][index[1]] = {player: 1};
+        this.setState(stateCopy);
     }
 
 
@@ -59,6 +76,8 @@ class Game extends React.Component {
                     sizeX={this.state.sizeX}
                     sizeY={this.state.sizeY}
                     pointOfGameBoard={this.state.pointOfGameBoard}
+                    stateOfGameBoard={this.state.stateOfGameBoard}
+                    onClick={this.handleClickSquare.bind(this)}
                 />
                 <RefreshBoardButton
                     sizeX={this.state.sizeX}
