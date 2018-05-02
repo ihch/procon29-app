@@ -93,7 +93,7 @@ class Game extends React.Component {
         for (let i = Math.floor(counter / 2) * 2; i < Math.floor(counter / 2) * 2 + 2; i++) {
             for (let j = 0; j < 8; j++) {
                 if (selectGrid[0] === nowGrids[i][0] + dy[j] && selectGrid[1] === nowGrids[i][1] + dx[j]) {
-                    let stateCopy = Object.assign({}, this.state.playerStayGridNow);
+                    let stateCopy = Object.assign([], this.state.playerStayGridNow);
                     stateCopy[i] = [null, null]
                     this.setState({playerStayGridNow: stateCopy});
                     return true;
@@ -134,7 +134,7 @@ class Game extends React.Component {
         }
 
         if (this.state.clickedGridCache.length === 4) {
-            let stateCopy = Object.assign([], this.state);
+            let stateCopy = Object.assign({}, this.state);
             stateCopy.stateOfGameBoard[stateCopy.countTurn + 1] = Object.assign({}, stateCopy.stateOfGameBoard[stateCopy.countTurn]);
             for (let i = 0; i < 4; i++) {
                 let index = this.state.clickedGridCache[i];
