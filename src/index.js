@@ -16,6 +16,7 @@ function makeRandomNumber(mod=17, negativeNumberProbability=10) {
     return Math.floor(Math.random() * 100) % modNumSize * toNegative;
 }
 
+
 function initBoardPoint(sizeX, sizeY) {
    let arr = new Array(sizeX).fill(0).map(() => {
        return new Array(sizeY).fill(0);
@@ -27,6 +28,7 @@ function initBoardPoint(sizeX, sizeY) {
    }
    return arr;
 }
+
 
 function initBoardState(sizeX, sizeY, gameTurn, firstStayGrid=null) {
     let arr =  new Array(gameTurn + 1).fill(0).map(() => {
@@ -44,6 +46,7 @@ function initBoardState(sizeX, sizeY, gameTurn, firstStayGrid=null) {
 
     return arr;
 }
+
 
 class Game extends React.Component {
     constructor(props) {
@@ -67,6 +70,7 @@ class Game extends React.Component {
         }
     }
 
+
     initStayPlayerGrid(sizeX, sizeY, gameTurn=120) {
         let x = Math.floor(Math.random() * 100) % Math.floor(sizeX / 2);
         let y = Math.floor(Math.random() * 100) % Math.floor(sizeY / 2);
@@ -85,6 +89,7 @@ class Game extends React.Component {
         this.setState({stateOfGameBoard: board});
         return arr;
     }
+
 
     isAroundGrid(selectGrid, nowGrids, counter) {
         const dx = [0, 0, 1, 1, 1, 0, -1, -1, -1];
@@ -186,6 +191,7 @@ class Game extends React.Component {
     }
 }
 
+
 class App extends React.Component {
     render() {
         return (
@@ -196,6 +202,7 @@ class App extends React.Component {
         );
     }
 }
+
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
