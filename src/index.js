@@ -87,14 +87,12 @@ class Game extends React.Component {
     }
 
     isAroundGrid(selectGrid, nowGrids, counter) {
-        // let flg = false;
         const dx = [0, 1, 1, 1, 0, -1, -1, -1];
         const dy = [1, 1, 0, -1, -1, -1, 0, 1];
 
         for (let i = Math.floor(counter / 2) * 2; i < Math.floor(counter / 2) * 2 + 2; i++) {
             for (let j = 0; j < 8; j++) {
                 if (selectGrid[0] === nowGrids[i][0] + dy[j] && selectGrid[1] === nowGrids[i][1] + dx[j]) {
-                    // flg = true;
                     let stateCopy = Object.assign({}, this.state.playerStayGridNow);
                     stateCopy[i] = [null, null]
                     this.setState({playerStayGridNow: stateCopy});
