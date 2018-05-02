@@ -150,7 +150,7 @@ class Game extends React.Component {
             this.setState({nowSelector: !this.state.nowSelector});
         }
 
-        if (this.state.gameTurn === this.countTurn) {
+        if (this.state.gameTurn === this.state.countTurn) {
             this.setState({playerStayGridNow: [new Array(4).fill(0).map(() => { return [null, null]; })]});
             // ゲーム終了処理wo書きましょう
         }
