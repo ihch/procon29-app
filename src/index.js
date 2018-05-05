@@ -140,7 +140,7 @@ class Game extends React.Component {
 
         if (this.state.clickedGridCache.length === 4) {
             let stateCopy = Object.assign({}, this.state);
-            stateCopy.stateOfGameBoard[stateCopy.countTurn + 1] = Object.assign({}, stateCopy.stateOfGameBoard[stateCopy.countTurn]);
+            stateCopy.stateOfGameBoard[stateCopy.countTurn + 1] = Object.assign([], stateCopy.stateOfGameBoard[stateCopy.countTurn]);
             for (let i = 0; i < 4; i++) {
                 let nextGrid = this.state.clickedGridCache[i];
                 stateCopy.stateOfGameBoard[stateCopy.countTurn + 1][nextGrid[0]][nextGrid[1]] = {player: (i === 0 || i === 1) ? 1 : 2};
