@@ -124,7 +124,7 @@ class Game extends React.Component {
 
 
     handleClickSquare(event) {
-        var index = event.target.value.split(",").map((n) => Number(n));
+        let index = event.target.value.split(",").map((n) => Number(n));
         this.setState({cannotSelectGrid: false});
         if (!this.isAroundGrid(index, this.state.playerStayGridNow, this.state.clickedGridCache.length)) {
             console.log("isAround: ", this.isAroundGrid(index, this.state.playerStayGridNow[this.state.clickedGridCache.length]));
@@ -142,8 +142,8 @@ class Game extends React.Component {
             let stateCopy = Object.assign({}, this.state);
             stateCopy.stateOfGameBoard[stateCopy.countTurn + 1] = Object.assign({}, stateCopy.stateOfGameBoard[stateCopy.countTurn]);
             for (let i = 0; i < 4; i++) {
-                let index = this.state.clickedGridCache[i];
-                stateCopy.stateOfGameBoard[stateCopy.countTurn + 1][index[0]][index[1]] = {player: (i === 0 || i === 1) ? 1 : 2};
+                let nextGrid = this.state.clickedGridCache[i];
+                stateCopy.stateOfGameBoard[stateCopy.countTurn + 1][nextGrid[0]][nextGrid[1]] = {player: (i === 0 || i === 1) ? 1 : 2};
             }
             stateCopy.countTurn += 1;
             stateCopy.playerStayGridNow = Object.assign([], stateCopy.clickedGridCache);
