@@ -95,14 +95,9 @@ class Game extends React.Component {
 		const dx = [0, 0, 1, 1, 1, 0, -1, -1, -1];
 		const dy = [0, 1, 1, 0, -1, -1, -1, 0, 1];
 
-		for (let i = Math.floor(counter / 2) * 2; i < Math.floor(counter / 2) * 2 + 2; i++) {
-			for (let j = 0; j < dx.length; j++) {
-				if (selectGrid[0] === nowGrids[i][0] + dy[j] && selectGrid[1] === nowGrids[i][1] + dx[j]) {
-					// let stateCopy = Object.assign([], this.state.playerStayGridNow);
-					// stateCopy[i] = [null, null]
-					// this.setState({playerStayGridNow: stateCopy});
-					return true;
-				}
+		for (let j = 0; j < dx.length; j++) {
+			if (selectGrid[0] === nowGrids[counter][0] + dy[j] && selectGrid[1] === nowGrids[counter][1] + dx[j]) {
+				return true;
 			}
 		}
 	}
@@ -147,7 +142,7 @@ class Game extends React.Component {
 		let index = event.target.value.split(",").map((n) => Number(n));
 		this.setState({cannotSelectGrid: false});
 		if (!this.isAroundGrid(index, this.state.playerStayGridNow, this.state.clickedGridCache.length)) {
-			console.log("isAround: ", this.isAroundGrid(index, this.state.playerStayGridNow[this.state.clickedGridCache.length]));
+			// console.log("isAround: ", this.isAroundGrid(index, this.state.playerStayGridNow[this.state.clickedGridCache.length]));
 			this.setState({cannotSelectGrid: true});
 			return;
 		}
